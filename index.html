@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Divine Engagement Invitation | Kanukuntla Rajkoti Chary & Pavani</title>
+    <title>Engagement Invitation | Kanukuntla Rajkoti Chary & Pavani</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -437,7 +437,7 @@
             <!-- Invitation Title & Proclamation -->
             <div class="my-6">
                 <span class="font-great-vibes text-3xl sm:text-4xl text-amber-300 block">With the divine blessings of
-                    M</span>
+                    Mahadev</span>
                 <h2
                     class="font-cinzel-dec text-2xl sm:text-3xl md:text-4xl font-bold gold-gradient-text tracking-wider uppercase mt-1">
                     Engagement Ceremony
@@ -631,6 +631,49 @@
         </div>
     </div>
 
+
+    <!-- ======================================================== -->
+    <!-- MODAL: ADD TO CALENDAR (GOOGLE & APPLE/OUTLOOK)          -->
+    <!-- ======================================================== -->
+    <div id="calendarModal"
+        class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="carved-stone-card max-w-sm w-full rounded-2xl p-6 relative border border-amber-500/50 shadow-2xl text-center">
+            <button onclick="closeCalendarModal()"
+                class="absolute top-4 right-4 text-amber-400 hover:text-white text-lg">
+                ✕
+            </button>
+
+            <span class="text-3xl block mb-1">🗓️</span>
+            <h3 class="font-cinzel text-lg font-bold gold-gradient-text uppercase tracking-wider">
+                Add to Calendar
+            </h3>
+            <p class="text-xs text-amber-200/70 mb-5">Save the auspicious date: Nov 05, 2026 (11:00 AM IST)</p>
+
+            <div class="space-y-3 text-left">
+                <!-- Option 1: Google Calendar (Direct 1-Click for Android/Gmail/PC) -->
+                <a id="googleCalLink" href="#" target="_blank" onclick="closeCalendarModal()"
+                    class="flex items-center space-x-3 p-3.5 rounded-xl border border-amber-400/50 bg-[#1e1510] hover:bg-amber-500/20 hover:border-amber-300 transition active:scale-[0.98] group">
+                    <span class="text-2xl group-hover:scale-110 transition-transform">📅</span>
+                    <div class="flex-1">
+                        <h4 class="font-cinzel text-xs sm:text-sm font-bold text-amber-100">Google Calendar</h4>
+                        <p class="text-[10px] text-amber-300/75">Instant 1-Click Save (Android, Gmail, Chrome)</p>
+                    </div>
+                    <span class="text-xs text-amber-400 font-bold bg-amber-500/20 px-2 py-1 rounded-md">Open ↗</span>
+                </a>
+
+                <!-- Option 2: Apple / Outlook Calendar (.ics) -->
+                <button onclick="downloadIcsFile(); closeCalendarModal();"
+                    class="w-full flex items-center space-x-3 p-3.5 rounded-xl border border-amber-500/30 bg-[#16100d] hover:bg-amber-500/15 hover:border-amber-400 transition active:scale-[0.98] group">
+                    <span class="text-2xl group-hover:scale-110 transition-transform">🍏</span>
+                    <div class="flex-1 text-left">
+                        <h4 class="font-cinzel text-xs sm:text-sm font-bold text-amber-100">Apple / Outlook (.ics)</h4>
+                        <p class="text-[10px] text-amber-300/75">Download file for iPhone, Mac & Outlook</p>
+                    </div>
+                    <span class="text-xs text-amber-400 font-bold bg-amber-500/20 px-2 py-1 rounded-md">Save ↓</span>
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- ======================================================== -->
     <!-- MODAL: BLESSINGS & RSVP                                  -->
@@ -875,8 +918,8 @@
             updateThemeUI(false);
         }
 
-        // Countdown Timer Logic (Nov 05, 2026 11:00 AM)
-        const targetDate = new Date("November 5, 2026 11:00:00").getTime();
+        // Countdown Timer Logic (Nov 05, 2026 11:00 AM IST)
+        const targetDate = new Date("2026-11-05T11:00:00+05:30").getTime();
 
         function updateCountdown() {
             const now = new Date().getTime();
@@ -919,23 +962,60 @@
             document.getElementById('brideNameDisplay').textContent = savedBrideName;
         }
 
-        // Add to Calendar .ics
-        function addToCalendar() {
-            const brideName = document.getElementById('brideNameDisplay').textContent.trim() || 'Dhenchanadula Pavani';
-            const icsContent =
-                `BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:-//Rajkoti Engagement Invitation//EN
-CALSCALE:GREGORIAN
-BEGIN:VEVENT
-SUMMARY:Kanukuntla Rajkoti Chary & ${brideName} Engagement Ceremony
-DESCRIPTION:Auspicious Divine Engagement Ceremony of Kanukuntla Rajkoti Chary & ${brideName} at Shubham Gardens, Warangal.\\nMap: https://maps.app.goo.gl/XDid99drjaKJUAWt5
-LOCATION:Shubham Gardens, 100 Feet Rd, opp. Shubham gardens, Kashibugga, Enumamula, Warangal, Telangana 506002
-DTSTART:20261105T053000Z
-DTEND:20261105T113000Z
-STATUS:CONFIRMED
-END:VEVENT
-END:VCALENDAR`;
+        // ========================================================
+        // CALENDAR CONTROLLER: GOOGLE CALENDAR & APPLE/OUTLOOK (.ICS)
+        // ========================================================
+        function openCalendarModal() {
+            const brideName = document.getElementById('brideNameDisplay').textContent.trim() || 'Pavani';
+            const title = encodeURIComponent(`Kanukuntla Rajkoti Chary & ${brideName} Engagement Ceremony`);
+            const details = encodeURIComponent(
+                `॥ ॐ श्री गणेशाय नमः ॥\n\n` +
+                `Auspicious Divine Engagement Ceremony of Kanukuntla Rajkoti Chary & ${brideName}.\n\n` +
+                `📅 Date: Thursday, November 05, 2026\n` +
+                `⏰ Sumuhurtham: 11:00 AM IST\n` +
+                `🏛️ Venue: Shubham Gardens, Warangal\n` +
+                `📍 Google Maps: https://maps.app.goo.gl/XDid99drjaKJUAWt5\n\n` +
+                `We seek your esteemed presence and heartfelt blessings!`
+            );
+            const location = encodeURIComponent(`Shubham Gardens, 100 Feet Rd, opp. Shubham gardens, Kashibugga, Enumamula, Warangal, Telangana 506002`);
+            
+            // 11:00 AM IST (05:30 UTC) to 5:00 PM IST (11:30 UTC)
+            const googleCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=20261105T053000Z/20261105T113000Z&details=${details}&location=${location}`;
+            
+            const gLink = document.getElementById('googleCalLink');
+            if (gLink) gLink.href = googleCalUrl;
+            
+            document.getElementById('calendarModal').classList.remove('hidden');
+        }
+
+        function closeCalendarModal() {
+            document.getElementById('calendarModal').classList.add('hidden');
+        }
+
+        function downloadIcsFile() {
+            const brideName = document.getElementById('brideNameDisplay').textContent.trim() || 'Pavani';
+            const nowIso = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+            
+            // RFC 5545 strictly requires CRLF (\r\n) line endings and UID/DTSTAMP
+            const icsLines = [
+                'BEGIN:VCALENDAR',
+                'VERSION:2.0',
+                'PRODID:-//Rajkoti Engagement Invitation//EN',
+                'CALSCALE:GREGORIAN',
+                'METHOD:PUBLISH',
+                'BEGIN:VEVENT',
+                'UID:rajkoti-pavani-engagement-20261105@invitation',
+                `DTSTAMP:${nowIso}`,
+                'DTSTART:20261105T053000Z',
+                'DTEND:20261105T113000Z',
+                `SUMMARY:Kanukuntla Rajkoti Chary & ${brideName} Engagement Ceremony`,
+                `DESCRIPTION:Auspicious Divine Engagement Ceremony of Kanukuntla Rajkoti Chary & ${brideName} at Shubham Gardens\\, Warangal.\\nMap: https://maps.app.goo.gl/XDid99drjaKJUAWt5`,
+                'LOCATION:Shubham Gardens\\, 100 Feet Rd\\, opp. Shubham gardens\\, Kashibugga\\, Enumamula\\, Warangal\\, Telangana 506002',
+                'STATUS:CONFIRMED',
+                'END:VEVENT',
+                'END:VCALENDAR'
+            ];
+            const icsContent = icsLines.join('\r\n');
 
             const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8;' });
             const link = document.createElement('a');
@@ -945,6 +1025,10 @@ END:VCALENDAR`;
             link.click();
             document.body.removeChild(link);
             showToast("Calendar Event downloaded!");
+        }
+
+        function addToCalendar() {
+            openCalendarModal();
         }
 
         // Share on WhatsApp
