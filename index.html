@@ -477,16 +477,10 @@
                 <div class="mt-4">
                     <span
                         class="text-[10px] sm:text-[11px] uppercase tracking-[0.3em] text-amber-400/90 font-cinzel font-semibold">Bride</span>
-                    <div class="flex items-center justify-center space-x-2">
-                        <h3 id="brideNameDisplay"
-                            class="font-cinzel text-xl sm:text-3xl font-bold gold-gradient-text tracking-wide mt-1">
-                             Pavani
-                        </h3>
-                        <button onclick="promptBrideName()" title="Edit Bride's Name"
-                            class="text-amber-400/70 hover:text-amber-300 text-xs p-1">
-                            ✏️
-                        </button>
-                    </div>
+                    <h3 id="brideNameDisplay"
+                        class="font-cinzel text-xl sm:text-3xl font-bold gold-gradient-text tracking-wide mt-1">
+                        Pavani
+                    </h3>
                     <p class="text-xs text-amber-200/70 font-light mt-0.5">Daughter of Denchanadhula Mohan Padma</p>
                 </div>
             </div>
@@ -945,22 +939,6 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // Customise Bride's Name Prompt
-        function promptBrideName() {
-            const current = document.getElementById('brideNameDisplay').textContent.trim();
-            const newName = prompt("Enter the Bride / Partner's Name:", current);
-            if (newName && newName.trim().length > 0) {
-                document.getElementById('brideNameDisplay').textContent = newName.trim();
-                localStorage.setItem('rajkoti_bride_name', newName.trim());
-                showToast("Bride's name updated!");
-            }
-        }
-
-        // Restore saved bride name
-        const savedBrideName = localStorage.getItem('rajkoti_bride_name');
-        if (savedBrideName) {
-            document.getElementById('brideNameDisplay').textContent = savedBrideName;
-        }
 
         // ========================================================
         // CALENDAR CONTROLLER: GOOGLE CALENDAR & APPLE/OUTLOOK (.ICS)
